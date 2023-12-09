@@ -1,8 +1,15 @@
-import numpy as np 
+#------------------------------------------------------
 
-class director():
+#Class to define a director field. 
+
+#------------------------------------------------------
+
+
+import numpy as np
+
+class Director():
     
-    #initialize director field based on initial conditions
+    #initialize field based on initial conditions
 
     def __init__(self,L_x,L_y,a_x,a_y,radius) -> None:
 
@@ -19,6 +26,8 @@ class director():
 
       self.n = np.zeros([self.N_x,self.N_y,3])
 
+    # defining n: 
+
       for i in range(self.N_x):
         for j in range(self.N_y):
            
@@ -33,13 +42,15 @@ class director():
             self.n[i][j][1] = new_nj
             self.n[i][j][2] = new_nk
 
+            #if outside skyrmion boundry
+
           else:
               
             self.n[i][j][0] = 0
             self.n[i][j][1] = 0
             self.n[i][j][2] = -1
 
-    #method to calculate grad n
+    #method to calculate grad n, curl n and laplace n 
 
     def calculate_derivatives(self):
 
@@ -62,6 +73,8 @@ class director():
 
           current_x = (i - self.x_correction)*self.a_x
           current_y = (j - self.y_correction)*self.a_y
+
+            # Ignore outside boundry:
 
           if np.sqrt((current_x)**2 + (current_y)**2) <= self.radius:
 
@@ -90,7 +103,7 @@ class director():
             self.dn_dy[i][j] = [dnx_dy,dny_dy,dnz_dy]
 
 
-              #Second derivatives (not 100% accurate on outer boundry)
+              #Second derivatives 
 
             dnx_dx_2 = ( self.n[i+1][j][0] - 2*self.n[i][j][0] + self.n[i-1][j][0] ) / self.a_x**2
 
@@ -110,6 +123,8 @@ class director():
     
     def calculate_energy(self,K,B):
 
+      # Energy functional caclulation found using:
+
       # E = sum  ( K/2 * mod_grad_n_squared + B (n . n_curl) )
 
       self.mod_grad_squared = np.zeros([self.N_x,self.N_y])
@@ -128,6 +143,8 @@ class director():
       self.E = np.sum(E_total)
 
       return self.E
+
+    # topological charge calculation
     
     def calculate_Q(self):
 
