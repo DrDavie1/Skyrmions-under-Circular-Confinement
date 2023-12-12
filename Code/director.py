@@ -11,7 +11,7 @@ class Director():
     
     #initialize field based on initial conditions
 
-    def __init__(self,L_x,L_y,a_x,a_y,radius) -> None:
+    def __init__(self,L_x: float,L_y: float,a_x: float,a_y: float,radius: float) -> None:
 
       self.N_x = int(L_x/a_x)
       self.N_y = int(L_y/a_x)
@@ -52,7 +52,7 @@ class Director():
 
     #method to calculate grad n, curl n and laplace n 
 
-    def calculate_derivatives(self):
+    def calculate_derivatives(self) -> np.ndarray:
 
       #Energy minimisation and cacluation:
 
@@ -121,7 +121,7 @@ class Director():
 
       return self.n
     
-    def calculate_energy(self,K,B):
+    def calculate_energy(self,K: float,B: float) -> np.ndarray:
 
       # Energy functional caclulation found using:
 
@@ -146,7 +146,7 @@ class Director():
 
     # topological charge calculation
     
-    def calculate_Q(self):
+    def calculate_Q(self) -> np.ndarray:
 
       self.q_sum = np.zeros([self.N_x,self.N_y])
 
@@ -167,7 +167,7 @@ class Director():
 alpha = 0
 twist = 1
 
-def n_init(x,y,R,alpha,twist):
+def n_init(x: float,y: float,R: float,alpha: float,twist: float) -> tuple:
     
     r = np.sqrt(x**2 + y**2) 
    
