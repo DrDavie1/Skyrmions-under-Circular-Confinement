@@ -2,3 +2,5 @@
 
 # Skyrmion Energy Minimisation
 Bsc Final Project
+
+https://www.youtube.com/watch?v=qvYDNGPhcds
